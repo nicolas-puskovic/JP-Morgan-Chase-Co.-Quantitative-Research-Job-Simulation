@@ -8,7 +8,7 @@ class GasVisualizer:
         
         hist_daily = to_daily_resolution(df_historical)
         
-        # CORREZIONE: Gestione corretta della concatenazione per il grafico
+        
         col_name = df_historical.columns[0] # 'Prices'
         pred_series.name = col_name
         
@@ -65,4 +65,5 @@ class GasVisualizer:
             template='plotly_white',
             hovermode="x unified"
         )
+
         return fig
