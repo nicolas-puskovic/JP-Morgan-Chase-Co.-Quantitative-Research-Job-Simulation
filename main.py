@@ -8,7 +8,6 @@ from src.visualizer import GasVisualizer
 from src.validator import GasValidator 
 
 def main():
-    # ... (Setup Percorsi rimangono uguali) ...
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     DATA_PATH = os.path.join(BASE_DIR, 'data', 'Nat_Gas.csv')
     
@@ -29,7 +28,7 @@ def main():
     model_system = GasModel(save_dir=os.path.join(BASE_DIR, 'models'))
     model_system.load_or_train(df['Prices'])
 
-    # 3. Validazione & Quality Assurance (Opzionale ma raccomandata)
+    # 3. Validazione & Quality Assurance 
     # Creiamo il validatore passandogli il modello GIA' pronto
     validator = GasValidator(model_system)
     
@@ -56,7 +55,6 @@ def main():
     do_pricing = input(">> Vuoi valutare una strategia di stoccaggio? [y/n]: ").lower()
     
     if do_pricing == 'y':
-        # Esempio di parametri (puoi renderli input utente se vuoi)
         print(">> Inizializzazione contratto standard:")
         print("   - Max Vol: 1.000.000 MMBtu")
         print("   - Rateo Iniezione/Prelievo: 100.000 MMBtu/day")
@@ -67,10 +65,6 @@ def main():
                                    with_rate=100000,
                                    storage_cost=0.10)
         
-        # Simuliamo una strategia semplice:
-        # Comprare in Estate (Prezzi bassi), Vendere in Inverno (Prezzi alti)
-        # Nota: L'utente dovrebbe inserire date future rispetto al dataset!
-        # Assumiamo che l'utente inserisca date valide (es. Estate 2025, Inverno 2026)
         
         print("\nInserisci le date (formato MM/GG/AA). Lascia vuoto per terminare la lista.")
         
@@ -122,4 +116,5 @@ def main():
             print(f"   ❌ {msg}")
 
 if __name__ == "__main__":
+
     main()
