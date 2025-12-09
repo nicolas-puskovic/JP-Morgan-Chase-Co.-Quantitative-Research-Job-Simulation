@@ -34,7 +34,7 @@ class GasModel:
     def _optimize_params(self, df):
         print(">> Inizio Grid Search (Aumentata)...")
         
-        # CORREZIONE 1: Range più ampio per catturare pattern complessi
+        # 1: Range più ampio per catturare pattern complessi
         # p, q fino a 2. d fino a 1 (differenziazione).
         p = q = range(0, 3) 
         d = range(0, 2)
@@ -136,10 +136,7 @@ class GasModel:
         forecast = self.results.get_forecast(steps=steps)
         return forecast.predicted_mean, forecast.conf_int()
     def run_backtest(self, df, test_months=6):
-        """
-        Nasconde gli ultimi 'test_months' mesi, addestra il modello
-        e confronta le previsioni con i dati reali.
-        """
+        
         print(f"\n--- AVVIO BACKTEST (Ultimi {test_months} mesi nascosti) ---")
         
         # 1. Split Temporale
@@ -166,14 +163,15 @@ class GasModel:
         # MAE: Errore medio assoluto (quanto sbaglio in media in $)
         mae = np.mean(np.abs(pred_mean - test.iloc[:,0]))
         
-        # RMSE: Radice dell'errore quadratico medio (punisce di più i grandi errori)
+        # RMSE: Radice dell'errore quadratico medio 
         rmse = np.sqrt(mean_squared_error(test, pred_mean))
         
-        # MAPE: Errore percentuale medio (es. ho sbagliato del 5%)
+        # MAPE: Errore percentuale medio 
         mape = np.mean(np.abs((test.iloc[:,0] - pred_mean) / test.iloc[:,0])) * 100
         
         print(f">> MAE  (Errore Medio): ${mae:.2f}")
         print(f">> RMSE (Errore Quadratico): ${rmse:.2f}")
         print(f">> MAPE (Errore Percentuale): {mape:.2f}%")
         
+
         return test, pred_mean, mape
